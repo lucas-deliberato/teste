@@ -1,0 +1,30 @@
+
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  GITHUB_TOKEN: ${{ secrets.PAT }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout                                  
+        uses: actions/checkout@v2
+      
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      
+      - name: Install semantic-release plugin
+        run: npm install @semantic-release/git -D
+      
+      - name: Semantic-release
+        run: npx semantic-release
